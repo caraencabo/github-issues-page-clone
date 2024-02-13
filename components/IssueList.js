@@ -1,15 +1,17 @@
 import Link from "next/link";
 import OpenIcon from "./OpenIcon";
 
-export default function IssueList({ title, id, dateOpened, openedBy, status, labelName, labelColor }) {
+export default function IssueList({ title, number, dateOpened, openedBy, status, labelName, labelColor }) {
 
   return (
-    <div className="border-b border-gray-300 p-4 rounded">
+    <div className="border-b border-gray-300 p-4">
       <div className="flex items-center">
         <div className="flex-shrink-0 pl-3">
-          <OpenIcon height="16" width="16" />
+          <OpenIcon height="16" width="16" color="green" />
         </div>
-        <p className="text-md font-bold">{title}</p>
+        <Link href={`/issues/${number}`}>
+          <p className="text-md font-bold">{title}</p>
+        </Link>
         <div className="flex space-x-2">
           <Link
             href="/"
@@ -23,7 +25,7 @@ export default function IssueList({ title, id, dateOpened, openedBy, status, lab
 
       <div className="pl-8">
         <p className="text-gray-600 text-xs">
-          #{id} opened on {dateOpened} by {openedBy}
+          #{number} opened on {dateOpened} by {openedBy}
         </p>
       </div>
     </div>
