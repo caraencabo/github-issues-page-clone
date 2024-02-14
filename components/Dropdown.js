@@ -1,7 +1,11 @@
 import { useState } from "react";
 
-export default function Dropdown({ buttonText, options }) {
+export default function Dropdown({ buttonText, options, onSelect }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleOptionClick = (filter) => {
+    onSelect(filter);
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -32,7 +36,6 @@ export default function Dropdown({ buttonText, options }) {
         </svg>
       </button>
 
-    {/* menu */}
       <div className={`${isDropdownOpen ? "block" : "hidden"} z-10 absolute mt-2 bg-white rounded-md shadow w-auto dark:bg-gray-700 border border-gray-300`}>
         <ul
           className="text-xs text-gray-700 dark:text-gray-200"
@@ -43,6 +46,7 @@ export default function Dropdown({ buttonText, options }) {
               <a
                 href={option.link}
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white border-b border-gray-300"
+                onClick={() => handleOptionClick(option.filter)}
               >
                 {option.label}
               </a>
@@ -53,4 +57,3 @@ export default function Dropdown({ buttonText, options }) {
     </div>
   );
 };
-

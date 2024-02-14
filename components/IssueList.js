@@ -1,7 +1,8 @@
 import Link from "next/link";
 import OpenIcon from "./OpenIcon";
+import DateFormatter from "./DateFormatter";
 
-export default function IssueList({ title, number, dateOpened, openedBy, status, labelName, labelColor }) {
+export default function IssueList({ title, number, dateOpened, openedBy, labelName, labelColor }) {
 
   return (
     <div className="border-b border-gray-300 p-4">
@@ -25,7 +26,7 @@ export default function IssueList({ title, number, dateOpened, openedBy, status,
 
       <div className="pl-8">
         <p className="text-gray-600 text-xs">
-          #{number} opened on {dateOpened} by {openedBy}
+          #{number} opened on <DateFormatter dateString={dateOpened} /> by {openedBy}
         </p>
       </div>
     </div>
