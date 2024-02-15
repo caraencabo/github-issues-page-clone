@@ -4,6 +4,8 @@ import OpenIcon from '@/components/OpenIcon';
 import ClosedIcon from '@/components/ClosedIcon';
 import { useState, useEffect } from 'react';
 import DateFormatter from '@/components/DateFormatter';
+import Markdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 export default function IssueDetailPage() {
   const router = useRouter();
@@ -80,7 +82,7 @@ export default function IssueDetailPage() {
           </p>
         </div>
         <div className="m-10">
-          <p>{body}</p>
+          <Markdown rehypePlugins={[rehypeRaw]}>{body}</Markdown>
         </div>
       </div>
     </div>
