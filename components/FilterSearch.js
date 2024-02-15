@@ -1,6 +1,7 @@
 import { CiSearch } from "react-icons/ci";
 import { GoTag } from "react-icons/go";
 import Dropdown from "@/components/Dropdown";
+import Link from "next/link";
 
 export default function FilterSearch({ repoName, repoOwner, onFilterChange }) {
 
@@ -47,9 +48,9 @@ export default function FilterSearch({ repoName, repoOwner, onFilterChange }) {
                     <GoTag className="mr-1" />
                     Labels
                 </button>
-                <button className="bg-green-700 hover:bg-green-800 text-white text-sm font-medium p-2.5 rounded">
-                    New Issue
-                </button>
+                <Link href="/" className="bg-green-700 hover:bg-green-800 text-white text-sm font-medium p-2.5 rounded">
+                    View Issues
+                </Link>
             </div>
         </div>
     );

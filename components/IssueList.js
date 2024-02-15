@@ -1,8 +1,14 @@
 import Link from "next/link";
 import OpenIcon from "./OpenIcon";
 import DateFormatter from "./DateFormatter";
+import { useRouter } from "next/router";
 
 export default function IssueList({ title, number, dateOpened, openedBy, labelName, labelColor }) {
+
+  const router = useRouter();
+
+  const owner = router.query.owner
+  const name = router.query.name
 
   return (
     <div className="border-b border-gray-300 p-4">
@@ -10,7 +16,7 @@ export default function IssueList({ title, number, dateOpened, openedBy, labelNa
         <div className="flex-shrink-0 pl-3">
           <OpenIcon height="16" width="16" color="green" />
         </div>
-        <Link href={`/issues/${number}`}>
+        <Link href={`/issues/${owner}/${name}/${number}`}>
           <p className="text-md font-bold">{title}</p>
         </Link>
         <div className="flex space-x-2">

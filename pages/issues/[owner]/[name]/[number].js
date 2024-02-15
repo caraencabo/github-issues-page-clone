@@ -11,13 +11,13 @@ export default function IssueDetailPage() {
   const router = useRouter();
   const number = router.query.number;
   const [issueData, setIssueData] = useState(null);
-  const [repoOwner, setRepoOwner] = useState("vuejs");
-  const [repoName, setRepoName] = useState("vue");
-
+  const owner = router.query.owner
+  const name = router.query.name
+  
   useEffect(() => {
     const fetchIssueData = async () => {
       try {
-        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues/${number}`);
+        const response = await fetch(`https://api.github.com/repos/${owner}/${name}/issues/${number}`);
         const data = await response.json();
         setIssueData(data);
       } catch (error) {
