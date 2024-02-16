@@ -2,39 +2,18 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import OpenIcon from '@/components/OpenIcon';
 import ClosedIcon from '@/components/ClosedIcon';
-import { useState, useEffect } from 'react';
 import DateFormatter from '@/components/DateFormatter';
 import Markdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-export default function IssueDetailPage() {
+export default function IssueDetailPage({ issueData }) {
+  const { title, labels, state, user, created_at, body } = issueData
   const router = useRouter();
   const number = router.query.number;
-  const [issueData, setIssueData] = useState(null);
-  const owner = router.query.owner
-  const name = router.query.name
-  
-  useEffect(() => {
-    const fetchIssueData = async () => {
-      try {
-        const response = await fetch(`https://api.github.com/repos/${owner}/${name}/issues/${number}`);
-        const data = await response.json();
-        setIssueData(data);
-      } catch (error) {
-        console.error('Error fetching issue data:', error);
-      }
-    };
-
-    if (number) {
-      fetchIssueData();
-    }
-  }, [number]);
 
   if (!issueData) {
     return <div>Loading...</div>; 
   }
-
-  const { title, labels, state, user, created_at, body } = issueData;
 
   return (
     <div className="mx-20 my-5">
@@ -87,4 +66,25 @@ export default function IssueDetailPage() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { owner, name, number } = params;
+
+  try {
+    const response = await fetch(`https://api.github.com/repos/${owner}/${name}/issues/${number}`);
+    const issueData = await response.json();
+
+    return {
+      props: {
+        issueData,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching issue data:', error);
+    return {
+      notFound: true,
+    };
+  }
 }

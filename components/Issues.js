@@ -28,8 +28,15 @@ export default function Issues() {
     try {
       setLoading(true);
       const response = await fetch(url);
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          router.push('/404')
+          return;
+        }
+      }
+
       const data = await response.json();
-      
       const openIssues = data.filter((issue) => issue.state === "open").length;
       const closedIssues = data.filter((issue) => issue.state === "closed").length;
       setOpenCount(openIssues);
@@ -99,7 +106,7 @@ export default function Issues() {
             <p className="text-sm">{openCount} Open</p>
           </div>
 
-          <Link href="/" className="flex items-center">
+          <div className="flex items-center">
             <svg
               aria-hidden="true"
               height="16"
@@ -111,7 +118,7 @@ export default function Issues() {
               <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
             </svg>
             <p className="text-sm">{closedCount} Closed</p>
-          </Link>
+          </div>
           <div className="ml-auto">
             <Dropdown buttonText="Sort" options={dropdownOptions} />
           </div>
@@ -142,6 +149,7 @@ export default function Issues() {
                 openedBy={issue.user.login}
                 labelName={issue.labels.map((label) => label.name)}
                 labelColor={issue.labels.map((label) => label.color)}
+                state={issue.state}
               />
             ))
           )
